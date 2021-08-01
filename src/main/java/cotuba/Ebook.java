@@ -1,11 +1,12 @@
 package cotuba;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public class Ebook {
 
     private String formato;
-    private String arquivoDeSaida;
+    private Path arquivoDeSaida;
     private List<Capitulo> capitulos;
 
     public String getFormato() {
@@ -14,10 +15,10 @@ public class Ebook {
     public void setFormato(String formato) {
         this.formato = formato;
     }
-    public String getArquivoDeSaida() {
+    public Path getArquivoDeSaida() {
         return arquivoDeSaida;
     }
-    public void setArquivoDeSaida(String arquivoDeSaida) {
+    public void setArquivoDeSaida(Path arquivoDeSaida) {
         this.arquivoDeSaida = arquivoDeSaida;
     }
     public List<Capitulo> getCapitulos() {

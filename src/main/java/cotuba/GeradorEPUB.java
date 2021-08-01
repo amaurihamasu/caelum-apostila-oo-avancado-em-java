@@ -11,12 +11,23 @@ import nl.siegmann.epublib.service.MediatypeService;
 
 public class GeradorEPUB {
 
-    public void gera(Path diretorioDosMD, Path arquivoDeSaida) {
+    public void gera(Ebook ebook) {
+
+        Path arquivoDeSaida = ebook.getArquivoDeSaida();
+
         Book epub = new Book();
 
-        // TODO: usar título do capítulo
-        epub.addSection("Capítulo",
-                new Resource(html.getBytes(), MediatypeService.XHTML));
+        for (Capitulo capitulo : ebook.getCapitulos()) {
+
+            String html = capitulo.getConteudoHTML();
+
+            String tituloCapitulo = capitulo.getTitulo();
+            
+            // TODO: usar título do capítulo
+            epub.addSection(tituloCapitulo,
+                    new Resource(html.getBytes(), MediatypeService.XHTML));
+
+        }
 
         EpubWriter epubWriter = new EpubWriter();
 
