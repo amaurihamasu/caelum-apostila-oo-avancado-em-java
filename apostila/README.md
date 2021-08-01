@@ -1,24 +1,12 @@
-# Descrição
-
-Projeto criado para acompanhar a apostila do curso da caelum. 
-
-Segue os créditos do mesmo.
-
----
-
 # Apostila do curso [Práticas de Design e Arquitetura de Código para Aplicações Java](https://www.caelum.com.br/curso-design-arquitetura-de-aplicacoes-java) da Caelum
 
 Para mais informações sobre o curso, acesse: https://www.caelum.com.br/curso-design-arquitetura-de-aplicacoes-java
-
----
 
 ## Licença
 
 Esta obra está licenciada com uma Licença [Creative Commons Atribuição-NãoComercial-SemDerivações 4.0 Internacional](http://creativecommons.org/licenses/by-nc-nd/4.0/).
 
 ![](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)
-
----
 
 ## Ementa
 
@@ -254,55 +242,3 @@ Esta obra está licenciada com uma Licença [Creative Commons Atribuição-NãoC
 - Exercício: Injetando a classe Cotuba no Cotuba Web
 
 ### Apêndice: Referências
-
----
----
-
-# Cotuba
-
-Gerador de ebooks escritos no formato Markdown (`.md`) para os formatos EPUB e PDF.
-
-Implementado em Java.
-
-Pré-requisitos:
-
-- Java 8+
-- Maven 3+
-
-Para gerar um arquivo `.zip` com os JARS e os scripts necessários, execute:
-
-```
-mvn install
-```
-
-O `.zip` será gerado na pasta `target`.
-
-Descompacte esse `.zip` em um diretório qualquer.
-
-Rode os comandos abaixo nesse diretório.
-
-Se desejar, use os arquivos `.md` do diretório `exemplo`.
-
----
-
-## PDF
-
-Para gerar um PDF, faça:
-
-```
-./cotuba.sh -d diretorio/do/livro -f pdf
-```
-
-Deverá ser gerado um arquivo chamado `book.pdf`.
-
----
-
-## EPUB
-
-Para gerar um EPUB, faça:
-
-```
-./cotuba.sh -d diretorio/do/livro -f epub
-```
-
-Deverá ser gerado um arquivo chamado `book.epub`.
