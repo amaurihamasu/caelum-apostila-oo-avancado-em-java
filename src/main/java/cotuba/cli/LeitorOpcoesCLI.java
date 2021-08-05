@@ -36,23 +36,19 @@ class LeitorOpcoesCLI {
     }
 
     public LeitorOpcoesCLI(String[] args) {
-        Options options = new Options();
 
-        Option opcaoDeDiretorioDosMD = new Option("d", "dir", true,
-                "Diretório que contem os arquivos md. Default: diretório atual.");
-        options.addOption(opcaoDeDiretorioDosMD);
+        CommandLine cmd = extrairArgumentosInformados(args);
 
-        Option opcaoDeFormatoDoEbook = new Option("f", "format", true,
-                "Formato de saída do ebook. Pode ser: pdf ou epub. Default: pdf");
-        options.addOption(opcaoDeFormatoDoEbook);
+        obterNomeDoDiretorioDosMD(cmd);
+        obterNomeDoFormatoDoEbook(cmd);
+        obterNomeDoArquivoDeSaidaDoEbook(cmd);
+        obterModoVerboso(cmd);
 
-        Option opcaoDeArquivoDeSaida = new Option("o", "output", true,
-                "Arquivo de saída do ebook. Default: book.{formato}.");
-        options.addOption(opcaoDeArquivoDeSaida);
+    }
 
-        Option opcaoModoVerboso = new Option("v", "verbose", false,
-                "Habilita modo verboso.");
-        options.addOption(opcaoModoVerboso);
+    private CommandLine extrairArgumentosInformados(String[] args) {
+
+        Options options = inicializarOpcoesCLI();
 
         CommandLineParser cmdParser = new DefaultParser();
         HelpFormatter ajuda = new HelpFormatter();
@@ -64,20 +60,22 @@ class LeitorOpcoesCLI {
             ajuda.printHelp("cotuba", options);
             throw new RuntimeException("Opção inválida", e);
         }
+        return cmd;
+    }
 
-        String nomeDoDiretorioDosMD = cmd.getOptionValue("dir");
-
-        if (nomeDoDiretorioDosMD != null) {
-            diretorioDosMD = Paths.get(nomeDoDiretorioDosMD);
-            if (!Files.isDirectory(diretorioDosMD)) {
-                throw new RuntimeException(
-                        nomeDoDiretorioDosMD + " não é um diretório.");
+    private void obterNomeDoArquivoDeSaidaDoEbook(CommandLine cmd) {
+        String nomeDoArquivoDeSaidaDoEbook = cmd.getOptionValue("output");
+        if (nomeDoArquivoDeSaidaDoEbook != null) {
+            arquivoDeSaida = Paths.get(nomeDoArquivoDeSaidaDoEbook);
+            if (Files.exists(arquivoDeSaida) && Files.isDirectory(arquivoDeSaida)) {
+                throw new RuntimeException(nomeDoArquivoDeSaidaDoEbook + " é um diretório.");
             }
         } else {
-            Path diretorioAtual = Paths.get("");
-            diretorioDosMD = diretorioAtual;
+            arquivoDeSaida = Paths.get("book." + formato.toLowerCase());
         }
+    }
 
+    private void obterNomeDoFormatoDoEbook(CommandLine cmd) {
         String nomeDoFormatoDoEbook = cmd.getOptionValue("format");
 
         if (nomeDoFormatoDoEbook != null) {
@@ -85,20 +83,52 @@ class LeitorOpcoesCLI {
         } else {
             formato = "pdf";
         }
+    }
 
-        String nomeDoArquivoDeSaidaDoEbook = cmd.getOptionValue("output");
-        if (nomeDoArquivoDeSaidaDoEbook != null) {
-            arquivoDeSaida = Paths.get(nomeDoArquivoDeSaidaDoEbook);
-            if (Files.exists(arquivoDeSaida)
-                    && Files.isDirectory(arquivoDeSaida)) {
-                throw new RuntimeException(
-                        nomeDoArquivoDeSaidaDoEbook + " é um diretório.");
+    private void obterNomeDoDiretorioDosMD(CommandLine cmd) {
+        String nomeDoDiretorioDosMD = cmd.getOptionValue("dir");
+
+        if (nomeDoDiretorioDosMD != null) {
+            diretorioDosMD = Paths.get(nomeDoDiretorioDosMD);
+            if (!Files.isDirectory(diretorioDosMD)) {
+                throw new RuntimeException(nomeDoDiretorioDosMD + " não é um diretório.");
             }
         } else {
-            arquivoDeSaida = Paths.get("book." + formato.toLowerCase());
+            Path diretorioAtual = Paths.get("");
+            diretorioDosMD = diretorioAtual;
         }
+    }
 
+    private void obterModoVerboso(CommandLine cmd) {
         modoVerboso = cmd.hasOption("verbose");
+    }
+
+    private Options inicializarOpcoesCLI() {
+        Options options = new Options();
+        options.addOption(opcaoDeDiretorioDosMD());
+        options.addOption(opcaoDeFormatoDoEbook());
+        options.addOption(opcaoDeArquivoDeSaida());
+        options.addOption(opcaoModoVerboso());
+        return options;
+    }
+
+    private Option opcaoDeDiretorioDosMD() {
+        return new Option("d", "dir", true,
+                "Diretório que contem os arquivos md. Default: diretório atual.");
+    }
+
+    private Option opcaoDeFormatoDoEbook() {
+        return new Option("f", "format", true,
+                "Formato de saída do ebook. Pode ser: pdf ou epub. Default: pdf");
+    }
+
+    private Option opcaoDeArquivoDeSaida() {
+        return new Option("o", "output", true,
+                "Arquivo de saída do ebook. Default: book.{formato}.");
+    }
+
+    private Option opcaoModoVerboso() {
+        return new Option("v", "verbose", false, "Habilita modo verboso.");
     }
 
 }
