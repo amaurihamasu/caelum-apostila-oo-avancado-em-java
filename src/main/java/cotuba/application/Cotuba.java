@@ -5,6 +5,8 @@ import java.util.List;
 
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
+import cotuba.epub.GeradorEPUBComEpublib;
+import cotuba.pdf.GeradorPDFComIText;
 
 public class Cotuba {
 
@@ -22,20 +24,22 @@ public class Cotuba {
         ebook.setArquivoDeSaida(arquivoDeSaida);
         ebook.setCapitulos(capitulos);
 
+        GeradorEbook gerador;
+        
         if ("pdf".equals(formato)) {
-
-            GeradorPDF geradorPDF = GeradorPDF.cria();
-            geradorPDF.gera(ebook);
+            
+            gerador = new GeradorPDFComIText();
 
         } else if ("epub".equals(formato)) {
 
-            GeradorEPUB geradorEPUB = GeradorEPUB.cria();
-            geradorEPUB.gera(ebook);
+            gerador = new GeradorEPUBComEpublib();
 
         } else {
             throw new RuntimeException("Formato do ebook inválido: " + formato);
         }
 
+        
+        gerador.gera(ebook);
     }
 
 }
