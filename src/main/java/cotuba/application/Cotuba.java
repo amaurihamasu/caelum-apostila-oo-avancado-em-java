@@ -5,14 +5,15 @@ import java.util.List;
 
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
+import cotuba.domain.FormatoEbook;
 
 public class Cotuba {
 
-    public void executa(ParametrosCotuba opcoesCLI) {
+    public void executa(ParametrosCotuba parametros) {
 
-        Path diretorioDosMD = opcoesCLI.getDiretorioDosMD();
-        String formato = opcoesCLI.getFormato();
-        Path arquivoDeSaida = opcoesCLI.getArquivoDeSaida();
+        Path diretorioDosMD = parametros.getDiretorioDosMD();
+        FormatoEbook formato = parametros.getFormato();
+        Path arquivoDeSaida = parametros.getArquivoDeSaida();
 
         RenderizadorMDParaHTML renderizador = RenderizadorMDParaHTML.cria();
         List<Capitulo> capitulos = renderizador.renderiza(diretorioDosMD);
