@@ -11,11 +11,11 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.IElement;
 
-import cotuba.application.GeradorPDF;
+import cotuba.application.GeradorEbook;
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
 
-public class GeradorPDFComIText implements GeradorPDF {
+public class GeradorPDF implements GeradorEbook {
 
     @Override
     public void gera(Ebook ebook) {

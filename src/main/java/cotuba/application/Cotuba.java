@@ -5,14 +5,15 @@ import java.util.List;
 
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
+import cotuba.domain.FormatoEbook;
 
 public class Cotuba {
 
-    public void executa(ParametrosCotuba opcoesCLI) {
+    public void executa(ParametrosCotuba parametros) {
 
-        Path diretorioDosMD = opcoesCLI.getDiretorioDosMD();
-        String formato = opcoesCLI.getFormato();
-        Path arquivoDeSaida = opcoesCLI.getArquivoDeSaida();
+        Path diretorioDosMD = parametros.getDiretorioDosMD();
+        FormatoEbook formato = parametros.getFormato();
+        Path arquivoDeSaida = parametros.getArquivoDeSaida();
 
         RenderizadorMDParaHTML renderizador = RenderizadorMDParaHTML.cria();
         List<Capitulo> capitulos = renderizador.renderiza(diretorioDosMD);
@@ -22,19 +23,8 @@ public class Cotuba {
         ebook.setArquivoDeSaida(arquivoDeSaida);
         ebook.setCapitulos(capitulos);
 
-        if ("pdf".equals(formato)) {
-
-            GeradorPDF geradorPDF = GeradorPDF.cria();
-            geradorPDF.gera(ebook);
-
-        } else if ("epub".equals(formato)) {
-
-            GeradorEPUB geradorEPUB = GeradorEPUB.cria();
-            geradorEPUB.gera(ebook);
-
-        } else {
-            throw new RuntimeException("Formato do ebook inválido: " + formato);
-        }
+        GeradorEbook gerador = GeradorEbook.cria(formato);
+        gerador.gera(ebook);
 
     }
 
