@@ -16,10 +16,12 @@ import org.commonmark.node.Text;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
+import cotuba.application.RenderizadorMDParaHTML;
 import cotuba.domain.Capitulo;
 
-public class RenderizadorMDParaHTML {
+public class RenderizadorMDParaHTMLComCommonMark implements RenderizadorMDParaHTML {
 
+    @Override
     public List<Capitulo> renderiza(Path diretorioDosMD) {
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/*.md");
         List<Capitulo> capitulos = obterConteudoCapitulos(diretorioDosMD, matcher);
@@ -43,7 +45,7 @@ public class RenderizadorMDParaHTML {
 
     private Capitulo extrairConteudoArquivosMDparaHTML(Path arquivoMD) {
         Node document = extrairConteudoArquivoMD(arquivoMD);
-        return renderizarConteudoParaHtml(arquivoMD, document); 
+        return renderizarConteudoParaHtml(arquivoMD, document);
     }
 
     private Capitulo renderizarConteudoParaHtml(Path arquivoMD, Node document) {

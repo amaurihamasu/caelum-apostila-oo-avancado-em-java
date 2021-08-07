@@ -8,22 +8,21 @@ import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.IElement;
-import com.itextpdf.layout.property.AreaBreakType;
 
+import cotuba.application.GeradorPDF;
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
 
-public class GeradorPDF {
+public class GeradorPDFComIText implements GeradorPDF {
 
+    @Override
     public void gera(Ebook ebook) {
 
         Path arquivoDeSaida = ebook.getArquivoDeSaida();
 
-        try (PdfWriter writer = new PdfWriter(
-                Files.newOutputStream(arquivoDeSaida));
+        try (PdfWriter writer = new PdfWriter(Files.newOutputStream(arquivoDeSaida));
                 PdfDocument pdf = new PdfDocument(writer);
                 Document pdfDocument = new Document(pdf)) {
 
@@ -31,8 +30,7 @@ public class GeradorPDF {
 
                 String html = capitulo.getConteudoHTML();
 
-                List<IElement> convertToElements = HtmlConverter
-                        .convertToElements(html);
+                List<IElement> convertToElements = HtmlConverter.convertToElements(html);
 
                 for (IElement element : convertToElements) {
                     pdfDocument.add((IBlockElement) element);
@@ -41,8 +39,8 @@ public class GeradorPDF {
             }
 
         } catch (Exception ex) {
-            throw new RuntimeException("Erro ao criar arquivo PDF: "
-                    + arquivoDeSaida.toAbsolutePath(), ex);
+            throw new RuntimeException(
+                    "Erro ao criar arquivo PDF: " + arquivoDeSaida.toAbsolutePath(), ex);
         }
     }
 
