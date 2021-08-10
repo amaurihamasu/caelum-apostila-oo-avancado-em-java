@@ -1,5 +1,10 @@
 package br.com.cognitio.estatisticas;
 
+import java.text.Normalizer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -16,19 +21,44 @@ public class CalculadoraEstatisticas implements Plugin {
 
     @Override
     public void aposGeracao(Ebook ebook) {
+
+        Map<String, Integer> contagemPalavras = new HashMap<String, Integer>();
+
         for (Capitulo capitulo : ebook.getCapitulos()) {
 
             String html = capitulo.getConteudoHTML();
             Document doc = Jsoup.parse(html);
+
             String textoDoCapitulo = doc.body().text();
 
-            String[] palavras = textoDoCapitulo.split("\\s+");
+            String textoDoCapituloSemPontuacao = textoDoCapitulo.replaceAll("\\p{Punct}", " ");
+
+            String textoDoCapituloSemAcentos = Normalizer
+                    .normalize(textoDoCapituloSemPontuacao, Normalizer.Form.NFD)
+                    .replaceAll("[^\\p{ASCII}]", "");
+
+            String[] palavras = textoDoCapituloSemAcentos.split("\\s+");
 
             for (String palavra : palavras) {
-                System.out.println(palavra);
+
+                String emMaiusculas = palavra.toUpperCase();
+
+                contagemPalavras.put(emMaiusculas, 1);
+
             }
 
         }
+
+        for (Entry<String, Integer> contagem : contagemPalavras.entrySet()) {
+
+            String palavra = contagem.getKey();
+
+            Integer ocorrencias = contagem.getValue();
+
+            System.out.println(palavra + ": " + ocorrencias);
+
+        }
+
     }
 
 }
