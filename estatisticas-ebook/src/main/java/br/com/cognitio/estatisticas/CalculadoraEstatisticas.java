@@ -1,8 +1,6 @@
 package br.com.cognitio.estatisticas;
 
 import java.text.Normalizer;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jsoup.Jsoup;
@@ -22,7 +20,7 @@ public class CalculadoraEstatisticas implements Plugin {
     @Override
     public void aposGeracao(Ebook ebook) {
 
-        Map<String, Integer> contagemPalavras = new HashMap<String, Integer>();
+        ContagemPalavras contagemPalavras = new ContagemPalavras();
 
         for (Capitulo capitulo : ebook.getCapitulos()) {
 
@@ -43,7 +41,7 @@ public class CalculadoraEstatisticas implements Plugin {
 
                 String emMaiusculas = palavra.toUpperCase();
 
-                contagemPalavras.put(emMaiusculas, 1);
+                contagemPalavras.adicionaPalavra(emMaiusculas);
 
             }
 
