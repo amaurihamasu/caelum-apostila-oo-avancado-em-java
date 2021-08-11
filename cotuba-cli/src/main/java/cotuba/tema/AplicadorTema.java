@@ -6,7 +6,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import cotuba.domain.Capitulo;
-import cotuba.plugin.Plugin;
+import cotuba.plugin.Tema;
 
 public class AplicadorTema {
 
@@ -16,7 +16,7 @@ public class AplicadorTema {
 
         Document document = Jsoup.parse(html);
 
-        List<String> listaDeTemas = Plugin.listaDeTemas();
+        List<String> listaDeTemas = Tema.listaDeTemas();
         for (String css : listaDeTemas) {
             document.select("head").append(" <style> " + css + " </style> ");
         }
