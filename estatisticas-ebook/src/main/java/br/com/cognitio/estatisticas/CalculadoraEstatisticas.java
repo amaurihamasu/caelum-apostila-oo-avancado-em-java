@@ -8,14 +8,9 @@ import org.jsoup.nodes.Document;
 
 import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
-import cotuba.plugin.Plugin;
+import cotuba.plugin.AoFinalizarGeracao;
 
-public class CalculadoraEstatisticas implements Plugin {
-
-    @Override
-    public String cssDoTema() {
-        return null;
-    }
+public class CalculadoraEstatisticas implements AoFinalizarGeracao {
 
     @Override
     public void aposGeracao(Ebook ebook) {
