@@ -8,7 +8,7 @@ import cotuba.md.RenderizadorMDParaHTMLComCommonMark;
 
 public interface RenderizadorMDParaHTML {
 
-    List<Capitulo> renderiza(Path diretorioDosMD);
+    List<cotuba.plugin.Capitulo> renderiza(Path diretorioDosMD);
 
     public static RenderizadorMDParaHTML cria() {
         return new RenderizadorMDParaHTMLComCommonMark();

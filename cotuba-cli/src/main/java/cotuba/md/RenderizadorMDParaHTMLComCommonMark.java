@@ -23,14 +23,14 @@ import cotuba.tema.AplicadorTema;
 public class RenderizadorMDParaHTMLComCommonMark implements RenderizadorMDParaHTML {
 
     @Override
-    public List<Capitulo> renderiza(Path diretorioDosMD) {
+    public List<cotuba.plugin.Capitulo> renderiza(Path diretorioDosMD) {
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/*.md");
-        List<Capitulo> capitulos = obterConteudoCapitulos(diretorioDosMD, matcher);
+        List<cotuba.plugin.Capitulo> capitulos = obterConteudoCapitulos(diretorioDosMD, matcher);
         return capitulos;
     }
 
-    private List<Capitulo> obterConteudoCapitulos(Path diretorioDosMD, PathMatcher matcher) {
-        List<Capitulo> capitulos = new ArrayList<Capitulo>();
+    private List<cotuba.plugin.Capitulo> obterConteudoCapitulos(Path diretorioDosMD, PathMatcher matcher) {
+        List<cotuba.plugin.Capitulo> capitulos = new ArrayList<cotuba.plugin.Capitulo>();
         try (Stream<Path> arquivosMD = Files.list(diretorioDosMD)) {
             arquivosMD.filter(matcher::matches).sorted().forEach(arquivoMD -> {
                 Capitulo capitulo = extrairConteudoArquivosMDparaHTML(arquivoMD);

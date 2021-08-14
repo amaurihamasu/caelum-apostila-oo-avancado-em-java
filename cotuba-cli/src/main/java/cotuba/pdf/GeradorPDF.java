@@ -12,13 +12,12 @@ import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.IElement;
 
 import cotuba.application.GeradorEbook;
-import cotuba.domain.Capitulo;
-import cotuba.domain.Ebook;
+import cotuba.plugin.Capitulo;
 
 public class GeradorPDF implements GeradorEbook {
 
     @Override
-    public void gera(Ebook ebook) {
+    public void gera(cotuba.domain.Ebook ebook) {
 
         Path arquivoDeSaida = ebook.getArquivoDeSaida();
 

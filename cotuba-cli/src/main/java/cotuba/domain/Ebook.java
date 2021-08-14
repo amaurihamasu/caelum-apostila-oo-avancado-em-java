@@ -3,11 +3,11 @@ package cotuba.domain;
 import java.nio.file.Path;
 import java.util.List;
 
-public class Ebook {
+public class Ebook implements cotuba.plugin.Ebook {
 
     private FormatoEbook formato;
     private Path arquivoDeSaida;
-    private List<Capitulo> capitulos;
+    private List<cotuba.plugin.Capitulo> capitulos;
 
     public FormatoEbook getFormato() {
         return formato;
@@ -21,10 +21,10 @@ public class Ebook {
     public void setArquivoDeSaida(Path arquivoDeSaida) {
         this.arquivoDeSaida = arquivoDeSaida;
     }
-    public List<Capitulo> getCapitulos() {
+    public List<cotuba.plugin.Capitulo> getCapitulos() {
         return capitulos;
     }
-    public void setCapitulos(List<Capitulo> capitulos) {
+    public void setCapitulos(List<cotuba.plugin.Capitulo> capitulos) {
         this.capitulos = capitulos;
     }
 
