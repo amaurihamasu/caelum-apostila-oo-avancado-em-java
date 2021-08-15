@@ -18,6 +18,7 @@ import org.commonmark.renderer.html.HtmlRenderer;
 
 import cotuba.application.RenderizadorMDParaHTML;
 import cotuba.domain.Capitulo;
+import cotuba.domain.builder.CapituloBuilder;
 import cotuba.tema.AplicadorTema;
 
 public class RenderizadorMDParaHTMLComCommonMark implements RenderizadorMDParaHTML {
@@ -50,14 +51,14 @@ public class RenderizadorMDParaHTMLComCommonMark implements RenderizadorMDParaHT
     }
 
     private Capitulo renderizarConteudoParaHtml(Path arquivoMD, Node document) {
-        Capitulo capitulo = new Capitulo();
+        CapituloBuilder capituloBuilder = new CapituloBuilder();
         document.accept(new AbstractVisitor() {
             @Override
             public void visit(Heading heading) {
                 if (heading.getLevel() == 1) {
                     // capítulo
                     String tituloDoCapitulo = ((Text) heading.getFirstChild()).getLiteral();
-                    capitulo.setTitulo(tituloDoCapitulo);
+                    capituloBuilder.comTitulo(tituloDoCapitulo);
                 } else if (heading.getLevel() == 2) {
                     // seção
                 } else if (heading.getLevel() == 3) {
@@ -69,15 +70,16 @@ public class RenderizadorMDParaHTMLComCommonMark implements RenderizadorMDParaHT
 
             HtmlRenderer renderer = HtmlRenderer.builder().build();
             String html = renderer.render(document);
-            capitulo.setConteudoHTML(html);
 
             AplicadorTema tema = new AplicadorTema();
-            tema.aplica(capitulo);
+            String htmlComTemas = tema.aplica(html);
+
+            capituloBuilder.comConteudoHTML(htmlComTemas);
 
         } catch (Exception ex) {
             throw new RuntimeException("Erro ao renderizar para HTML o arquivo " + arquivoMD, ex);
         }
-        return capitulo;
+        return capituloBuilder.constroi();
     }
 
     private Node extrairConteudoArquivoMD(Path arquivoMD) {

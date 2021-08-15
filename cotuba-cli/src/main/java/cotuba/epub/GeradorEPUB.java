@@ -6,7 +6,6 @@ import java.nio.file.Path;
 
 import cotuba.application.GeradorEbook;
 import cotuba.domain.Capitulo;
-import cotuba.domain.Ebook;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.epub.EpubWriter;
@@ -15,7 +14,7 @@ import nl.siegmann.epublib.service.MediatypeService;
 public class GeradorEPUB implements GeradorEbook {
 
     @Override
-    public void gera(Ebook ebook) {
+    public void gera(cotuba.domain.Ebook ebook) {
 
         Path arquivoDeSaida = ebook.getArquivoDeSaida();
 
@@ -41,5 +40,6 @@ public class GeradorEPUB implements GeradorEbook {
                     "Erro ao criar arquivo EPUB: " + arquivoDeSaida.toAbsolutePath(), ex);
         }
     }
+
 
 }

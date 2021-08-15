@@ -1,7 +1,6 @@
 package br.com.cognitio.estatisticas;
 
 import java.text.Normalizer;
-import java.util.Map.Entry;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -35,19 +34,16 @@ public class CalculadoraEstatisticas implements AoFinalizarGeracao {
             for (String palavra : palavras) {
 
                 String emMaiusculas = palavra.toUpperCase();
-
                 contagemPalavras.adicionaPalavra(emMaiusculas);
 
             }
 
         }
 
-        for (Entry<String, Integer> contagem : contagemPalavras.entrySet()) {
+        for (ContagemPalavras.Contagem contagem : contagemPalavras) {
 
-            String palavra = contagem.getKey();
-
-            Integer ocorrencias = contagem.getValue();
-
+            String palavra = contagem.getPalavra();
+            Integer ocorrencias = contagem.getQuantidade();
             System.out.println(palavra + ": " + ocorrencias);
 
         }
