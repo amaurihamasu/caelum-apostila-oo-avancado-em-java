@@ -3,6 +3,7 @@ package cotuba.application;
 import java.nio.file.Path;
 import java.util.List;
 
+import cotuba.domain.Capitulo;
 import cotuba.domain.Ebook;
 import cotuba.domain.FormatoEbook;
 import cotuba.plugin.AoFinalizarGeracao;
@@ -16,7 +17,7 @@ public class Cotuba {
         Path arquivoDeSaida = parametros.getArquivoDeSaida();
 
         RenderizadorMDParaHTML renderizador = RenderizadorMDParaHTML.cria();
-        List<cotuba.plugin.Capitulo> capitulos = renderizador.renderiza(diretorioDosMD);
+        List<Capitulo> capitulos = renderizador.renderiza(diretorioDosMD);
 
         Ebook ebook = new Ebook();
         ebook.setFormato(formato);

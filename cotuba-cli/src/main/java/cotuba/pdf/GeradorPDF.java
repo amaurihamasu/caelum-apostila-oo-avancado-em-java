@@ -12,7 +12,7 @@ import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.IElement;
 
 import cotuba.application.GeradorEbook;
-import cotuba.plugin.Capitulo;
+import cotuba.domain.Capitulo;
 
 public class GeradorPDF implements GeradorEbook {
 
