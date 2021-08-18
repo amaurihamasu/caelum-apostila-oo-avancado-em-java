@@ -13,5 +13,6 @@
 	</properties>
 	<modules>
 		<module>cotuba-core</module>
+		<module>cotuba-cli</module>
 	</modules>
 </project>
