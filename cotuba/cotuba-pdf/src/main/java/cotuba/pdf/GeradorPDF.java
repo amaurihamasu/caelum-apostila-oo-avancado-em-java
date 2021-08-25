@@ -11,8 +11,9 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.IElement;
 
-import cotuba.application.GeradorEbook;
 import cotuba.domain.Capitulo;
+import cotuba.domain.FormatoEbook;
+import cotuba.plugin.GeradorEbook;
 
 public class GeradorPDF implements GeradorEbook {
 
@@ -41,6 +42,11 @@ public class GeradorPDF implements GeradorEbook {
             throw new RuntimeException(
                     "Erro ao criar arquivo PDF: " + arquivoDeSaida.toAbsolutePath(), ex);
         }
+    }
+
+    @Override
+    public FormatoEbook formato() {
+        return FormatoEbook.PDF;
     }
 
 }
