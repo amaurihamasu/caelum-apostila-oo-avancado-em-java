@@ -1,7 +1,6 @@
 package cotuba.web.controller;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
