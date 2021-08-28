@@ -3,34 +3,38 @@ package cotuba.cli;
 import java.nio.file.Path;
 
 import cotuba.application.Cotuba;
-import cotuba.application.ParametrosCotuba;
+import cotuba.application.RepositorioDeMDs;
 
 public class Main {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        Path arquivoDeSaida;
-        boolean modoVerboso = false;
+		Path arquivoDeSaida;
+		boolean modoVerboso = false;
 
-        try {
+		try {
 
-            ParametrosCotuba opcoesCLI = new LeitorOpcoesCLI(args);
+			LeitorOpcoesCLI opcoesCLI = new LeitorOpcoesCLI(args);
 
-            arquivoDeSaida = opcoesCLI.getArquivoDeSaida();
-            modoVerboso = opcoesCLI.isModoVerboso();
+			Path diretorioDosMD = opcoesCLI.getDiretorioDosMD();
 
-            Cotuba cotuba = new Cotuba();
-            cotuba.executa(opcoesCLI);
+			arquivoDeSaida = opcoesCLI.getArquivoDeSaida();
+			modoVerboso = opcoesCLI.isModoVerboso();
 
-            System.out.println("Arquivo gerado com sucesso: " + arquivoDeSaida);
+			RepositorioDeMDs repositorio = new MDsDoDiretorio(diretorioDosMD);
 
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-            if (modoVerboso) {
-                ex.printStackTrace();
-            }
-            System.exit(1);
-        }
-    }
+			Cotuba cotuba = new Cotuba();
+			cotuba.executa(opcoesCLI, System.out::println, repositorio);
+
+			System.out.println("Arquivo gerado com sucesso: " + arquivoDeSaida);
+
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+			if (modoVerboso) {
+				ex.printStackTrace();
+			}
+			System.exit(1);
+		}
+	}
 
 }
